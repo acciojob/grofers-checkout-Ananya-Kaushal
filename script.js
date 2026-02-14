@@ -5,7 +5,7 @@ document.body.appendChild(getSumBtn);
 const getSum = () => {
 //Add your code here
   // 1. Select all price elements using the plural class name from the test
-    const priceElements = document.querySelectorAll('.price');
+    const priceElements = document.querySelectorAll('.prices');
     let total = 0;
 
     // 2. Calculate sum by iterating through the current text in the table
