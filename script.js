@@ -4,36 +4,38 @@ document.body.appendChild(getSumBtn);
 
 const getSum = () => {
 //Add your code here
-  // 1. Select all elements with the class 'price'
+  // 1. Select all price elements using the plural class name from the test
     const priceElements = document.querySelectorAll('.price');
     let total = 0;
 
-    // 2. Loop through the elements and sum their values
+    // 2. Calculate sum by iterating through the current text in the table
     priceElements.forEach(element => {
-        // Convert the text content to a number
-        total += Number(element.textContent);
+        const val = parseFloat(element.textContent);
+        if (!isNaN(val)) {
+            total += val;
+        }
     });
 
-    // 3. Create a new row and a cell for the total
+    // 3. Check if an answer row already exists to avoid duplicates
+    let ansRow = document.getElementById("ans-row");
+    if (ansRow) {
+        ansRow.remove();
+    }
+
+    // 4. Create the new row and the specific #ans cell
     const table = document.querySelector('table');
     const newRow = document.createElement('tr');
-    const totalCell = document.createElement('td');
-
-    // 4. Set the text and attributes
-    totalCell.textContent = total;
-    totalCell.setAttribute('id', 'ans'); // Good practice for identification
+    newRow.id = "ans-row"; // Helper ID to manage the row
     
-    // Make the cell span both columns for a clean look
-    totalCell.setAttribute('colspan', '2'); 
-    totalCell.style.textAlign = 'center';
-    totalCell.style.fontWeight = 'bold';
+    const totalCell = document.createElement('td');
+    totalCell.id = "ans"; // REQUIRED by the test: cy.get("#ans")
+    totalCell.textContent = total;
+    
+    // Optional: Make it look nice by spanning both columns
+    totalCell.setAttribute('colspan', '2');
 
-    // 5. Append the cell to the row, and the row to the table
     newRow.appendChild(totalCell);
     table.appendChild(newRow);
-
-    // Optional: Disable button after clicking to prevent duplicate rows
-    getSumBtn.disabled = true;
 };
 
 getSumBtn.addEventListener("click", getSum);
